@@ -1,0 +1,36 @@
+name: Отправка сообщения в Telegram
+
+on:
+  push:
+    branches: [ main, master ]  # Запускается при пуше (чтобы workflow появился в списке)
+  schedule:
+    # Отправка сообщений 19, 20 и 21 числа каждого месяца в 10:00 UTC
+    # Формат: минута час день месяц день_недели
+    # Время указано в UTC. Для Москвы (MSK = UTC+3): 10:00 UTC = 13:00 MSK
+    - cron: '0 10 19 * *'  # 19 число каждого месяца в 10:00 UTC
+    - cron: '0 10 20 * *'  # 20 число каждого месяца в 10:00 UTC
+    - cron: '0 10 21 * *'  # 21 число каждого месяца в 10:00 UTC
+    
+  workflow_dispatch:  # Позволяет запускать вручную из GitHub UI
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Send Telegram message
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MESSAGE_TEXT: ${{ secrets.MESSAGE_TEXT }}
+        run: |
+          node send_message.js
+
