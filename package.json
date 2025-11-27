@@ -1,0 +1,23 @@
+{
+  "name": "telegram-scheduler",
+  "version": "1.0.0",
+  "description": "Скрипт для автоматической отправки сообщений в Telegram канал через GitHub Actions",
+  "main": "send_message.js",
+  "type": "module",
+  "scripts": {
+    "start": "node send_message.js",
+    "test": "node send_message.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "scheduler",
+    "github-actions"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
